@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KELSEY</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #E3EFF8;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" >
+    <h1>hi kelsey!</h1>
+    <button onclick="suggestMovie()">here's a personalized movie/tv show recommendation for you from your friends...</button>
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    const shows = [
+        "the bear",
+        "the martian",
+        "school spirits",
+        "a good person",
+        "the last of us",
+        "big brother",
+        "scream queens",
+        "the fear street trilogy",
+        "the conjuring",
+        "us",
+        "moonlight",
+        "the hunger games",
+        "flipped",
+    ]
+
+    function suggestMovie() {
+        const randomIndex = Math.floor(Math.random() * shows.length);
+        const suggestion = shows[randomIndex];
+        document.getElementById('result').textContent = suggestion;
+    }
+</script>
+
+</body>
+</html>
