@@ -6,8 +6,9 @@
     <title>KATHRYN</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'New Century Schoolbook', 'TeX Gyre Schola', serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -18,12 +19,20 @@
             text-align: center;
             background-color: white;
             padding: 30px;
+            border: 10px ridge gray;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         h1 {
+            margin-top: 20px;
             margin-bottom: 20px;
-            font-size: 24px;
+            font-size: 30px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-size: 15px;
+            text-align: center
         }
         button {
             padding: 10px 20px;
@@ -33,25 +42,49 @@
             color: white;
             border: none;
             border-radius: 5px;
+            display: grid;
         }
         button:hover {
             background-color: #0056b3;
         }
-        .result {
+        .tv-screen-wrapper {
+            position: relative;
+            display: inline-block;
             margin-top: 20px;
-            font-size: 20px;
+        }
+        .tv-screen-wrapper img {
+            width: 500px;
+            height: auto;
+        }
+        .result {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 30px;
             font-weight: bold;
             color: #333;
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+            width: 80%;
         }
     </style>
 </head>
-<body>
 
-<div class="container" >
-    <h1>hi kathryn!</h1>
-    <button onclick="suggestMovie()">here's a personalized movie/tv show recommendation for you from your friends...</button>
-    <div class="result" id="result"></div>
+<body>
+<div>
+    <h1>hi kathryn! 👋 </h1>
+    <div class="container">
+        <button onclick="suggestMovie()">click here for a personalized movie/tv show recommendation from your friends...</button>
+        <div class="tv-screen-wrapper">
+            <img src="tv screen.png" alt="TV Screen">
+        <div class="result" id="result"></div>
+    </div>
 </div>
+<h2>
+    <a href="index.html">return to home</a>
+</h2>
 
 <script>
     const shows = [
@@ -70,13 +103,12 @@
       "bride wars",
       "twilight",
     ];
-
     function suggestMovie() {
         const randomIndex = Math.floor(Math.random() * shows.length);
         const suggestion = shows[randomIndex];
         document.getElementById('result').textContent = suggestion;
     }
 </script>
-
 </body>
+
 </html>
