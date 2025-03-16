@@ -32,17 +32,18 @@
         h2 {
             margin-bottom: 20px;
             font-size: 15px;
-            text-align: center
+            text-align: center;
         }
         button {
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 20px 40px;
+            font-size: 18px;
             cursor: pointer;
             background-color: #007BFF;
             color: white;
             border: none;
             border-radius: 5px;
-            display: grid;
+            display: inline-block;
+            margin: 10px;
         }
         button:hover {
             background-color: #0056b3;
@@ -57,63 +58,79 @@
             height: auto;
         }
         .result {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 30px;
+            font-size: 20px;
             font-weight: bold;
             color: #333;
             text-align: center;
             padding: 10px;
             border-radius: 5px;
             width: 80%;
+            margin-top: 20px;
         }
     </style>
 </head>
 
 <body>
 <div>
-    <br>
-    <br>
-    <h1>hi jodie! 👋 </h1>
+    <h1>Hi Jodie! 👋</h1>
+    <img src="jodie.jpg" alt="Image of Jodie" style="width: 150px; border-radius: 50%;">
     <div class="container">
-        <button onclick="suggestMovie()">click here for a personalized movie/tv show recommendation from your friends...</button>
+        <button onclick="showRecommendations('BY')">Recommendations BY Jodie</button>
+        <button onclick="showRecommendations('FOR')">Recommendations FOR Jodie</button>
+        
         <div class="tv-screen-wrapper">
-            <img src="tv screen.png" alt="TV Screen">
-        <div class="result" id="result"></div>
+            <img src="tv_screen.png" alt="TV Screen">
+            <div class="result" id="result"></div>
+        </div>
     </div>
+    <h2><a href="index.html">Return to Home</a></h2>
 </div>
-<h2>
-    <a href="index.html">return to home</a>
-</h2>
-
 
 <script>
-    const shows = [
-        "normal people",
-        "eternal sunshine of the spotless mind",
-        "la la land",
-        "severance",
-        "grey's anatomy",
-        "call me by your name",
-        "the bear",
-        "gossip girl",
-        "friends",
-        "gilmore girls",
-        "whiplash",
-        "the sopranos",
-        "avatar",
-        "how to lose a guy in 10 days",
-        "breaking bad"
+    // Movie Lists
+    const moviesByJodie = [
+        "Normal People",
+        "Eternal Sunshine of the Spotless Mind",
+        "La La Land",
+        "Severance",
+        "Grey's Anatomy",
+        "Call Me By Your Name",
+        "The Bear",
+        "Gossip Girl",
+        "Friends",
+        "Gilmore Girls",
+        "Whiplash",
+        "The Sopranos",
+        "Avatar",
+        "How to Lose a Guy in 10 Days",
+        "Breaking Bad"
     ];
-    function suggestMovie() {
-        const randomIndex = Math.floor(Math.random() * shows.length);
-        const suggestion = shows[randomIndex];
-        document.getElementById('result').textContent = suggestion;
+
+    const moviesForJodie = [
+        "Inception",
+        "The Dark Knight",
+        "The Matrix",
+        "Pulp Fiction",
+        "The Godfather",
+        "The Shawshank Redemption",
+        "The Avengers",
+        "Titanic",
+        "The Lord of the Rings",
+        "Star Wars: The Empire Strikes Back",
+        "Forrest Gump",
+        "The Lion King",
+        "Interstellar",
+        "The Prestige",
+        "Fight Club"
+    ];
+
+    // Function to display movie recommendations
+    function showRecommendations(type) {
+        let movieList = type === 'BY' ? moviesByJodie : moviesForJodie;
+        const randomIndex = Math.floor(Math.random() * movieList.length);
+        const suggestion = movieList[randomIndex];
+        document.getElementById('result').textContent = `Movie suggestion: ${suggestion}`;
     }
 </script>
 </body>
-
 </html>
-
