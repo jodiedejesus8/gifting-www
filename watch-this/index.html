@@ -1,65 +1,103 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
   <head>
-    <title>[watch this!] 🎞️ </title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[watch this!] 🎞️</title>
     <style>
+
       body {
-        font-family: 'New Century Schoolbook', 'TeX Gyre Schola', serif;
+        font-family: 'Poppins', sans-serif;
+        background-color: #fffad5;
+        margin: 0;
+        padding: 0;
         text-align: center;
-        margin-top: 50px;
-        background-color: #E3EFF8;
+        color: #333;
       }
+
+      h1 {
+        font-size: 2.5em;
+        color: #4a90e2;
+        margin-top: 40px;
+      }
+
+      h2 {
+        font-size: 1.4em;
+        color: #4a90e2;
+        font-weight: 300;
+        margin-bottom: 20px;
+      }
+
+      p {
+        font-size: 1.1em;
+        color: #444;
+        margin-bottom: 30px;
+        padding: 0 20px;
+        line-height: 1.6;
+      }
+
+      .image-container {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin-top: 20px;
+      }
+
       .profile-pic {
         width: 150px;
         height: 150px;
         object-fit: cover;
-        border: 3px ridge gold;
-        border-radius: 8px;
+        border-radius: 12px;
+        border: 4px ridge gold;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
-      .image-container {
-        display: flex;
-        justify-content: center;
-        gap: 10px; 
-      }  
+
+      .profile-pic:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2em;
+        }
+
+        h2 {
+          font-size: 1.2em;
+        }
+
+        .image-container {
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        .profile-pic {
+          width: 120px;
+          height: 120px;
+        }
+      }
     </style>
   </head>
 
   <body>
-    <!-- You can put your HTML here -->
-     
-    <h1> [watch this!] 🎞️ </h1>
-    <h2> a website for when you don't know what to watch...</h2>
-    <br>
-    <p> click on your image below to get movie/tv show recommendations from your friends! ⬇️</p>
-    <br>
+    <h1>[watch this!] 🎞️</h1>
+    <h2>a website for when you don't know what to watch...</h2>
+    <p>Click on your image below to get movie/TV show recommendations from your friends! ⬇️</p>
 
     <div class="image-container">
-    
-      <a href="jodie.html"> 
-      <img src="jodie.jpg" class="profile-pic">
-    </a>
-
-    <br>
-
-    <a href="kathryn.html">
-      <img src="kathryn.jpg" class="profile-pic">
-    </a>
-
-    <br>
-    
-    <a href="kelsey.html">
-      <img src="kelsey.jpg" class="profile-pic">
-    </a>
-    
-    <br>
-    
-    <a href="stella.html">
-      <img src="stella.jpg" class="profile-pic">
-    </a>
-
-  </div>  
+      <a href="jodie.html">
+        <img src="jodie.jpg" class="profile-pic" alt="Jodie">
+      </a>
+      <a href="kathryn.html">
+        <img src="kathryn.jpg" class="profile-pic" alt="Kathryn">
+      </a>
+      <a href="kelsey.html">
+        <img src="kelsey.jpg" class="profile-pic" alt="Kelsey">
+      </a>
+      <a href="stella.html">
+        <img src="stella.jpg" class="profile-pic" alt="Stella">
+      </a>
+    </div>
   </body>
 </html>
