@@ -33,7 +33,7 @@
 
         h2 {
             font-size: 18px;
-            color: #FAD02E;
+            color: black;
             margin-bottom: 20px;
         }
 
@@ -67,7 +67,7 @@
             width: 180px;
             border-radius: 50%;
             padding: 12px;
-            border: 5px ridge gold;
+            border: 5px solid gold;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
         }
 
@@ -82,12 +82,13 @@
         .recommendations-list li {
             margin: 15px 0;
             font-weight: 500;
-            transition: 0.2s;
+            transition: transform 0.3s ease-in-out;
         }
 
         .recommendations-list li:hover {
-            color: #FFB7B2;
-            transform: translateX(10px);
+            color: gold;
+            transform: scale(1.3);
+            z-index: 1;
         }
 
         #backHomeButton, #backProfileButton {

@@ -33,11 +33,11 @@
 
         h2 {
             font-size: 18px;
-            color: #FAD02E;
+            color: black;
             margin-bottom: 20px;
         }
 
-        label {
+        button {
             padding: 15px 30px;
             font-size: 18px;
             cursor: pointer;
@@ -50,17 +50,9 @@
             transition: 0.3s;
         }
 
-        label:hover {
+        button:hover {
             background-color: #FF8C6A;
             transform: scale(1.1);
-        }
-
-        input[type="radio"] {
-            display: none;
-        }
-
-        input[type="radio"]:checked + .recommendationsContent {
-            display: block;
         }
 
         .image-container {
@@ -75,7 +67,7 @@
             width: 180px;
             border-radius: 50%;
             padding: 12px;
-            border: 5px ridge gold;
+            border: 5px solid gold;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
         }
 
@@ -90,12 +82,13 @@
         .recommendations-list li {
             margin: 15px 0;
             font-weight: 500;
-            transition: 0.2s;
+            transition: transform 0.3s ease-in-out;
         }
 
         .recommendations-list li:hover {
-            color: #FFB7B2;
-            transform: translateX(10px);
+            color: gold;
+            transform: scale(1.3);
+            z-index: 1;
         }
 
         #backHomeButton, #backProfileButton {
@@ -128,13 +121,9 @@
             background-color: #3C4349;
             transform: scale(1.05);
         }
-
-        .recommendationsContent {
-            display: none;
-            text-align: center;
-        }
     </style>
 </head>
+
 <body>
     <div class="image-container">
         <img src="jodie.jpg" alt="Image of Jodie">
@@ -142,66 +131,74 @@
     </div>
 
     <div id="initialContent" style="text-align: center;">
-        <input type="radio" id="showBY" name="recommendations" />
-        <label for="showBY">Recommendations BY Jodie</label>
-        
-        <input type="radio" id="showFOR" name="recommendations" />
-        <label for="showFOR">Recommendations FOR Jodie</label>
+        <button onclick="showRecommendations('BY')">Recommendations BY Jodie</button>
+        <button onclick="showRecommendations('FOR')">Recommendations FOR Jodie</button>
     </div>
 
-    <div class="recommendationsContent" id="BY">
-        <h2>Recommendations BY Jodie</h2>
-        <ul class="recommendations-list">
-            <li>Wayne</li>
-            <li>The Fear Street Trilogy</li>
-            <li>Grown Ups</li>
-            <li>The Society</li>
-            <li>The Conjuring</li>
-            <li>Fresh</li>
-            <li>The Mummy</li>
-            <li>Normal People</li>
-            <li>Bride Wars</li>
-            <li>The Spectacular Now</li>
-            <li>Yellowstone</li>
-            <li>The 100</li>
-            <li>A Walk to Remember</li>
-            <li>Bedtime Stories</li>
-            <li>Nightcrawler</li>
-        </ul>
-    </div>
-
-    <div class="recommendationsContent" id="FOR">
-        <h2>Recommendations FOR Jodie</h2>
-        <ul class="recommendations-list">
-            <li>Baby Daddy</li>
-            <li>Life Unexpected</li>
-            <li>Limitless</li>
-            <li>Vampire Diaries</li>
-            <li>All American</li>
-            <li>Gossip Girl</li>
-            <li>Call Me By Your Name</li>
-            <li>La La Land</li>
-            <li>Bridgerton</li>
-            <li>Whiplash</li>
-            <li>The Originals</li>
-            <li>Eternal Sunshine of the Spotless Mind</li>
-            <li>Severance</li>
-            <li>The Sopranos</li>
-            <li>Avatar</li>
-            <li>How to Lose a Guy in 10 Days</li>
-            <li>Breaking Bad</li>
-            <li>Lady Bird</li>
-            <li>Yellowjackets</li>
-            <li>Everything Everywhere All at Once</li>
-            <li>Gone Girl</li>
-            <li>Sharp Objects</li>
-            <li>Go</li>
-            <li>Anora</li>
-            <li>The Shining</li>
-        </ul>
+    <div id="recommendationsContent" style="display: none; text-align: center;">
+        <h2 id="recommendationsTitle"></h2>
+        <ul id="recommendationsList" class="recommendations-list"></ul>
     </div>
 
     <a id="backHomeButton" href="index.html">Back to Home</a>
     <a id="backProfileButton" href="jodie.html">Back to Jodie's Profile</a>
+
+    <script>
+        const recommendations = {
+            BY: [
+            "Wayne",
+            "The Fear Street Trilogy",
+            "Grown Ups",
+            "The Society",
+            "The Conjuring",
+            "Fresh",
+            "The Mummy",
+            "Normal People",
+            "Bride Wars",
+            "The Spectacular Now",
+            "Yellowstone",
+            "The 100",
+            "A Walk to Remember",
+            "Bedtime Stories",
+            "Nightcrawler",
+            ],
+            FOR: [
+            "Baby Daddy", 
+            "Life Unexpected",
+            "Limitless",
+            "Vampire Diaries",
+            "All American",
+            "Gossip Girl",
+            "Call Me By Your Name",
+            "La La Land",
+            "Bridgerton",
+            "Whiplash",
+            "The Originals",
+            "Eternal Sunshine of the Spotless Mind",
+            "Severance",
+            "The Sopranos",
+            "Avatar",
+            "How to Lose a Guy in 10 Days",
+            "Breaking Bad",
+            "Lady Bird",
+            "Yellowjackets",
+            "Everything Everywhere All at Once",
+            "Gone Girl",
+            "Sharp Objects",
+            "Go",
+            "Anora",
+            "The Shining",
+            ]
+        };
+
+        function showRecommendations(type) {
+            document.getElementById('initialContent').style.display = 'none';
+            document.getElementById('recommendationsContent').style.display = 'block';
+            const title = type === 'BY' ? "Recommendations BY Jodie" : "Recommendations FOR Jodie";
+            document.getElementById('recommendationsTitle').textContent = title;
+            const recommendationsList = document.getElementById('recommendationsList');
+            recommendationsList.innerHTML = recommendations[type].map(movie => `<li>${movie}</li>`).join('');
+        }
+    </script>
 </body>
 </html>
