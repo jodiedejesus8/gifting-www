@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>stella's recommendations!</title>
+    <title>STELLA</title>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color:#f5cc8e;
+            background-color: #f5cc8e;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -15,12 +15,6 @@
             min-height: 100vh;
             margin: 0;
             padding: 0;
-            animation: fadeIn 2s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         h1 {
@@ -32,9 +26,12 @@
         }
 
         h2 {
-            font-size: 18px;
+            font-size: 24px;
             color: black;
             margin-bottom: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         button {
@@ -59,8 +56,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 20px;
-            padding-top: 20px;
+            margin-top: 40px;
+            margin-bottom: 40px;
         }
 
         .image-container img {
@@ -88,7 +85,6 @@
         .recommendations-list li:hover {
             color: gold;
             transform: scale(1.3);
-            z-index: 1;
         }
 
         #backHomeButton, #backProfileButton {
@@ -105,21 +101,35 @@
             transition: 0.3s;
             text-decoration: none;
             display: inline-block;
-            text-align: center;
         }
 
-        #backProfileButton { 
-            bottom: 70px; 
-            right: 20px;
-        }
-
-        #backHomeButton { 
-            right: 20px;
-        }
+        #backProfileButton { bottom: 70px; right: 20px; }
+        #backHomeButton { right: 20px; }
 
         #backHomeButton:hover, #backProfileButton:hover {
             background-color: #3C4349;
             transform: scale(1.05);
+        }
+
+        #watchThisMessage {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 20px;
+            text-transform: uppercase;
+            display: none;
+        }
+
+        #randomRecommendation {
+            background-color: gold;
+            color: black;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: none;
         }
     </style>
 </head>
@@ -138,6 +148,9 @@
     <div id="recommendationsContent" style="display: none; text-align: center;">
         <h2 id="recommendationsTitle"></h2>
         <ul id="recommendationsList" class="recommendations-list"></ul>
+        <button id="pickButton" onclick="showRandomRecommendation()">PICK ONE FOR ME</button>
+        <div id="watchThisMessage">You should WATCH THIS:</div>
+        <div id="randomRecommendation"></div>
     </div>
 
     <a id="backHomeButton" href="index.html">Back to Home</a>
@@ -146,56 +159,76 @@
     <script>
         const recommendations = {
             BY: [
-            "Pulp Fiction",
-            "Parasite",
-            "The Middle",
-            "Bend it Like Beckham",
-            "10 Things I Hate About You",
-            "Once Upon a Time in Hollywood",
-            "Girls",
-            "Uncut Gems",
-            "Moonstruck",
-            "Bob's Burgers",
-            "Gone Girl",
-            "Sharp Object",
-            "Go",
-            "Anora",
-            "The Shining",
+                "Pulp Fiction",
+                "Parasite",
+                "The Middle",
+                "Bend it Like Beckham",
+                "10 Things I Hate About You",
+                "Once Upon a Time in Hollywood",
+                "Girls",
+                "Uncut Gems",
+                "Moonstruck",
+                "Bob's Burgers",
+                "Gone Girl",
+                "Sharp Object",
+                "Go",
+                "Anora",
+                "The Shining",
             ],
             FOR: [
-            "Parks and Rec",
-            "Royal Pains",
-            "Gossip Girl",
-            "The Boys",
-            "Secret Life of an American Teenager",
-            "The Fosters",
-            "Moonrise Kingdom",
-            "The White Lotus",
-            "Below Deck",
-            "The Mummy",
-            "Whiplash",
-            "The Walking Dead",
-            "Real Housewives of Salt Lake City",
-            "Saltburn",
-            "The Conjuring",
-            "Anora",
-            "The Fear Street Trilogy",
-            "Wayne",
-            "Oculus",
-            "The Last of Us",
-            "Peaky Blinders",
-            "The Mask",
-            "The Bling Ring",
+                "Parks and Rec",
+                "Royal Pains",
+                "Gossip Girl",
+                "The Boys",
+                "Secret Life of an American Teenager",
+                "The Fosters",
+                "Moonrise Kingdom",
+                "The White Lotus",
+                "Below Deck",
+                "The Mummy",
+                "Whiplash",
+                "The Walking Dead",
+                "Real Housewives of Salt Lake City",
+                "Saltburn",
+                "The Conjuring",
+                "Anora",
+                "The Fear Street Trilogy",
+                "Wayne",
+                "Oculus",
+                "The Last of Us",
+                "Peaky Blinders",
+                "The Mask",
+                "The Bling Ring",
             ]
         };
+
+        let currentRecommendations = [];
 
         function showRecommendations(type) {
             document.getElementById('initialContent').style.display = 'none';
             document.getElementById('recommendationsContent').style.display = 'block';
-            const title = type === 'BY' ? "Recommendations BY Stella" : "Recommendations FOR Stella";
-            document.getElementById('recommendationsTitle').textContent = title;
-            const recommendationsList = document.getElementById('recommendationsList');
-            recommendationsList.innerHTML = recommendations[type].map(movie => `<li>${movie}</li>`).join('');
+            document.getElementById('recommendationsTitle').textContent = type === 'BY' ? "Recommendations BY Stella" : "Recommendations FOR Stellay";
+            currentRecommendations = recommendations[type];
+            updateRecommendationsList(currentRecommendations);
+        }
+
+        function updateRecommendationsList(recommendationsList) {
+            const recommendationsListElement = document.getElementById('recommendationsList');
+            recommendationsListElement.innerHTML = recommendationsList.map(movie => `<li>${movie}</li>`).join('');
+        }
+
+        function showRandomRecommendation() {
+            const randomIndex = Math.floor(Math.random() * currentRecommendations.length);
+            const randomRecommendation = currentRecommendations[randomIndex];
+
+            updateRecommendationsList([randomRecommendation]);
+
+            document.getElementById('pickButton').style.display = 'none';
+            document.getElementById('recommendationsTitle').style.display = 'none';
+            document.getElementById('recommendationsList').style.display = 'none';
+            document.getElementById('watchThisMessage').style.display = 'block';
+            document.getElementById('randomRecommendation').textContent = randomRecommendation;
+            document.getElementById('randomRecommendation').style.display = 'block';
         }
     </script>
 </body>

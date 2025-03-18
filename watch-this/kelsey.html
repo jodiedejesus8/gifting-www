@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>kelsey's recommendations!</title>
+    <title>KELSEY</title>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -15,12 +15,6 @@
             min-height: 100vh;
             margin: 0;
             padding: 0;
-            animation: fadeIn 2s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         h1 {
@@ -32,9 +26,12 @@
         }
 
         h2 {
-            font-size: 18px;
+            font-size: 24px;
             color: black;
             margin-bottom: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         button {
@@ -59,8 +56,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 20px;
-            padding-top: 20px;
+            margin-top: 40px;
+            margin-bottom: 40px;
         }
 
         .image-container img {
@@ -88,7 +85,6 @@
         .recommendations-list li:hover {
             color: gold;
             transform: scale(1.3);
-            z-index: 1;
         }
 
         #backHomeButton, #backProfileButton {
@@ -105,21 +101,35 @@
             transition: 0.3s;
             text-decoration: none;
             display: inline-block;
-            text-align: center;
         }
 
-        #backProfileButton { 
-            bottom: 70px; 
-            right: 20px;
-        }
-
-        #backHomeButton { 
-            right: 20px;
-        }
+        #backProfileButton { bottom: 70px; right: 20px; }
+        #backHomeButton { right: 20px; }
 
         #backHomeButton:hover, #backProfileButton:hover {
             background-color: #3C4349;
             transform: scale(1.05);
+        }
+
+        #watchThisMessage {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 20px;
+            text-transform: uppercase;
+            display: none;
+        }
+
+        #randomRecommendation {
+            background-color: gold;
+            color: black;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: none;
         }
     </style>
 </head>
@@ -138,6 +148,9 @@
     <div id="recommendationsContent" style="display: none; text-align: center;">
         <h2 id="recommendationsTitle"></h2>
         <ul id="recommendationsList" class="recommendations-list"></ul>
+        <button id="pickButton" onclick="showRandomRecommendation()">PICK ONE FOR ME</button>
+        <div id="watchThisMessage">You should WATCH THIS:</div>
+        <div id="randomRecommendation"></div>
     </div>
 
     <a id="backHomeButton" href="index.html">Back to Home</a>
@@ -146,58 +159,78 @@
     <script>
         const recommendations = {
             BY: [
-            "Call Me By Your Name",
-            "La La Land",
-            "Flipped",
-            "Whiplash",
-            "50 First Dates",
-            "Flushed Away",
-            "Bridgerton",
-            "One Day",
-            "Moonrise Kingdom",
-            "The White Lotus",
-            "Below Deck",
-            "Saltburn",
-            "Gossip Girl",
-            "The Real Housewives of Salt Lake City",
-            "Shrek",
+                "Call Me By Your Name",
+                "La La Land",
+                "Flipped",
+                "Whiplash",
+                "50 First Dates",
+                "Flushed Away",
+                "Bridgerton",
+                "One Day",
+                "Moonrise Kingdom",
+                "The White Lotus",
+                "Below Deck",
+                "Saltburn",
+                "Gossip Girl",
+                "The Real Housewives of Salt Lake City",
+                "Shrek",
             ],
             FOR: [
-            "Sweet Magnolias",
-            "Bones",
-            "Grey's Anatomy",
-            "Younger",
-            "New Girl",
-            "Thanksgiving",
-            "The Line",
-            "A Good Person",
-            "The Menu",
-            "Where the Crawdads Sing",
-            "Fresh",
-            "The Martian",
-            "Past Lives",
-            "School Spirits",
-            "Anne with an E",
-            "Yellowstone",
-            "The Society",
-            "Once Upon a Time in Hollywood",
-            "Girls",
-            "Uncut Gems",
-            "Moonstruck",
-            "Bob's Burgers",
-            "The 100",
-            "Scream Queens",
-            "New Year's Eve",
+                "Sweet Magnolias",
+                "Bones",
+                "Grey's Anatomy",
+                "Younger",
+                "New Girl",
+                "Thanksgiving",
+                "The Line",
+                "A Good Person",
+                "The Menu",
+                "Where the Crawdads Sing",
+                "Fresh",
+                "The Martian",
+                "Past Lives",
+                "School Spirits",
+                "Anne with an E",
+                "Yellowstone",
+                "The Society",
+                "Once Upon a Time in Hollywood",
+                "Girls",
+                "Uncut Gems",
+                "Moonstruck",
+                "Bob's Burgers",
+                "The 100",
+                "Scream Queens",
+                "New Year's Eve",
             ]
         };
+        
+        let currentRecommendations = [];
 
         function showRecommendations(type) {
             document.getElementById('initialContent').style.display = 'none';
             document.getElementById('recommendationsContent').style.display = 'block';
-            const title = type === 'BY' ? "Recommendations BY Kelsey" : "Recommendations FOR Kelsey";
-            document.getElementById('recommendationsTitle').textContent = title;
-            const recommendationsList = document.getElementById('recommendationsList');
-            recommendationsList.innerHTML = recommendations[type].map(movie => `<li>${movie}</li>`).join('');
+            document.getElementById('recommendationsTitle').textContent = type === 'BY' ? "Recommendations BY Kelsey" : "Recommendations FOR Kelsey";
+            currentRecommendations = recommendations[type];
+            updateRecommendationsList(currentRecommendations);
+        }
+
+        function updateRecommendationsList(recommendationsList) {
+            const recommendationsListElement = document.getElementById('recommendationsList');
+            recommendationsListElement.innerHTML = recommendationsList.map(movie => `<li>${movie}</li>`).join('');
+        }
+
+        function showRandomRecommendation() {
+            const randomIndex = Math.floor(Math.random() * currentRecommendations.length);
+            const randomRecommendation = currentRecommendations[randomIndex];
+
+            updateRecommendationsList([randomRecommendation]);
+
+            document.getElementById('pickButton').style.display = 'none';
+            document.getElementById('recommendationsTitle').style.display = 'none';
+            document.getElementById('recommendationsList').style.display = 'none';
+            document.getElementById('watchThisMessage').style.display = 'block';
+            document.getElementById('randomRecommendation').textContent = randomRecommendation;
+            document.getElementById('randomRecommendation').style.display = 'block';
         }
     </script>
 </body>
